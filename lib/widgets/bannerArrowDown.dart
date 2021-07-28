@@ -1,0 +1,63 @@
+import 'dart:math' as math;
+
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:portfolio/widget_barrel.dart';
+
+class BannerArrowDown extends StatefulWidget {
+  const BannerArrowDown({Key? key}) : super(key: key);
+
+  @override
+  _BannerArrowDownState createState() => _BannerArrowDownState();
+}
+
+class _BannerArrowDownState extends State<BannerArrowDown> with TickerProviderStateMixin {
+  late AnimationController _controller ;
+  late Animation<Offset> _offsetAnimation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: false);
+    _offsetAnimation = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(
+        0.0,
+        2.5,
+      ),
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.linear,
+    ));
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Stack(
+        alignment: Alignment.topCenter,
+        children: <Widget>[
+          Transform.rotate(
+            angle: -math.pi / 4,
+            child: Container(
+              width: 75.0,
+              height: 75.0,
+              color: Colors.brown.shade100,
+            ),
+          ),
+          SlideTransition(
+            position: _offsetAnimation,
+            child: Icon(
+              Ionicons.ios_arrow_round_down,
+              size: 28,
+              color: Theme.of(context).accentColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
