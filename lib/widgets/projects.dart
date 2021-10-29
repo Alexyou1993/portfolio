@@ -41,10 +41,10 @@ class Projects extends StatelessWidget {
             padding: const EdgeInsets.all(36.0),
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
+                crossAxisCount: MediaQuery.of(context).size.width > 738 ? 5 : 3,
                 crossAxisSpacing: 8.0,
                 mainAxisSpacing: 8.0,
-                childAspectRatio: MediaQuery.of(context).size.aspectRatio * 0.5,
+                childAspectRatio: MediaQuery.of(context).size.width > 738 ? MediaQuery.of(context).size.aspectRatio *0.5 : MediaQuery.of(context).size.aspectRatio,
               ),
               //scrollDirection: Axis.horizontal,
               itemCount: kWorksAssets.length,
@@ -53,45 +53,48 @@ class Projects extends StatelessWidget {
                   padding: const EdgeInsets.all(24.0),
                   child: Container(
                     height: 500.0,
-                    child: TextButton(
-                      onPressed: () => showDialog<String>(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return FittedBox(
-                            child: AlertDialog(
-                              title: Column(
-                                children: <Widget>[
-                                  Image.asset(
-                                    kWorksAssets[index],
+                    child: FittedBox(
+                      fit: MediaQuery.of(context).size.width > 738 ? BoxFit.scaleDown:BoxFit.cover,
+                      child: TextButton(
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return FittedBox(
+                              child: AlertDialog(
+                                title: Column(
+                                  children: <Widget>[
+                                    Image.asset(
+                                      kWorksAssets[index],
+                                    ),
+                                  ],
+                                ),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Colors.white30,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(75.0),
+                                      ),
+                                    ),
+                                    child: const Text(
+                                      'back',
+                                      style: TextStyle(
+                                        color: Colors.red,
+                                        fontSize: 24.0,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                   ),
                                 ],
                               ),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Colors.white30,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(75.0),
-                                    ),
-                                  ),
-                                  child: const Text(
-                                    'back',
-                                    style: TextStyle(
-                                      color: Colors.red,
-                                      fontSize: 24.0,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                      child: Image.asset(
-                        kWorksAssets[index],
+                            );
+                          },
+                        ),
+                        child: Image.asset(
+                          kWorksAssets[index],
+                        ),
                       ),
                     ),
                   ),
